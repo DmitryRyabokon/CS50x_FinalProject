@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    {% if name %}
+
+        Welcome {{ name }}.
+    
+    {% else %}
+
+        You are not logged in.
+    
+    {% endif %}
+
+{% endblock %}
