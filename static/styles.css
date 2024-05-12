@@ -40,3 +40,14 @@ body, html {
     width: 100%;             /* Makes the button span the full width of the form */
 }
 
+.btn-outline-primary {
+    width: 100%;
+}
+
+.rounded-input {
+    border-radius: 15px; /* Adjust this value to increase or decrease the roundness */
+}
+
+.rounded-button {
+    border-radius: 15px; /* Consistent roundness with the input field */
+}
