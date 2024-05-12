@@ -1,15 +1,49 @@
 {% extends "layout.html" %}
 
 {% block main %}
-
     {% if name %}
+        <!-- Page Layout -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar for User Functions -->
+                <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar overflow-auto">
+                    <div class="position-sticky pt-3">
+                        <!-- Search Form -->
+                        <form class="mb-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search users..." aria-label="Search users">
+                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                            </div>
+                        </form>
 
-        Welcome {{ name }}.
+                        <!-- Navigation Links -->
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" aria-current="page">Dashboard</a>
+                            </li>
+                            <!-- Additional navigation items can be added here -->
+                        </ul>
+                    </div>
+                </nav>
     
+                <!-- Main Content Area -->
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Welcome {{ name }}</h1>
+                    </div>
+                    <!-- Additional dynamic content goes here -->
+                </main>
+            </div>
+        </div>
+
     {% else %}
-
-        You are not logged in.
-    
+        <!-- Not Logged In Message -->
+        <div class="container">
+            <div class="py-5 text-center">
+                <h2>You are not logged in.</h2>
+                <p>Please log in to access the dashboard.</p>
+            </div>
+        </div>
     {% endif %}
 
 {% endblock %}

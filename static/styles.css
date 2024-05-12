@@ -1,0 +1,42 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+.sidebar {
+    height: 100vh;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#login {
+    position: fixed;
+    top: 30%;                /* Position the top edge of the element at the center of the page */
+    left: 50%;               /* Position the left edge of the element at the center of the page */
+    transform: translate(-50%, -50%); /* Shift the element left and up by half its width and height */
+    width: 250px;            /* Set a specific width to accommodate the form */
+    padding: 20px;           /* Add padding inside the form */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds a subtle shadow for better visibility */
+    background: #fff;        /* Set a background color */
+    border-radius: 8px;      /* Rounds the corners of the form */
+    display: block;          /* Ensures the form is a block-level element */
+    box-sizing: border-box;  /* Includes padding and border in the element's total width and height */
+}
+
+.form-control {
+    margin-bottom: 20px;     /* Adds spacing between form inputs */
+}
+
+
+.btn-primary {
+    width: 100%;             /* Makes the button span the full width of the form */
+}
+
