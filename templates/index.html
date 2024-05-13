@@ -9,12 +9,11 @@
                 <nav class="col-md-3 col-lg-2 bg-light sidebar">
                     <div class="position-sticky pt-3">
                         <!-- Search Form -->
-                        <form class="mb-4">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search users..." aria-label="Search users">
-                                <button class="btn btn-outline-primary btn-sm" type="submit">Search</button>
-                            </div>
+                        <form id="search-form">
+                            <input id="search" type="text" class="form-control" placeholder="Search users..." name="search">
+                            <button id="search" class="btn btn-primary" type="submit">Search</button>
                         </form>
+                        <div id="search-results"></div>
 
                         <!-- Navigation Links -->
                         <ul class="nav flex-column">
@@ -31,7 +30,16 @@
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Welcome {{ name }}</h1>
                     </div>
-                    <!-- Additional dynamic content goes here -->
+                    <!-- Your other content goes here -->
+                
+                    <!-- Place the message input div at the end of the main content but inside the main tag -->
+                    <div id="msg_input" class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary"s type="button" id="button-addon2">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                        
+                    </div>
                 </main>
             </div>
         </div>

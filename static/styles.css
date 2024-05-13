@@ -2,6 +2,10 @@ body, html {
     height: 100%;
     margin: 0;
 }
+main {
+    position: relative; /* New addition: Makes child absolute positioning relative to this */
+    min-height: calc(100vh - 120px); /* Ensure minimum height */
+}
 .sidebar {
     height: 100vh;
     overflow-y: auto;
@@ -31,10 +35,9 @@ body, html {
     box-sizing: border-box;  /* Includes padding and border in the element's total width and height */
 }
 
-.form-control {
+#search {
     margin-bottom: 20px;     /* Adds spacing between form inputs */
 }
-
 
 .btn-primary {
     width: 100%;             /* Makes the button span the full width of the form */
@@ -44,10 +47,26 @@ body, html {
     width: 100%;
 }
 
-.rounded-input {
-    border-radius: 15px; /* Adjust this value to increase or decrease the roundness */
+#msg_input {
+    position: fixed; /* Changed from absolute to fixed */
+    bottom: 5%; /* Distance from the bottom of the viewport */
+    left: calc(16.6667% + 1px); /* Adjust according to your sidebar width on large screens */
+    right: 0; /* Align to the right edge of the viewport */
+    padding: 0 15px; /* Optional padding */
+    z-index: 5; /* Keep it above other content */
+    width: calc(83.3333% - 2px); /* Adjust width to fit within the main content */
 }
 
-.rounded-button {
-    border-radius: 15px; /* Consistent roundness with the input field */
+#button-addon2 i {
+    /* Adjust the size of the icon if needed */
+    font-size: 18px;  /* Or whatever size fits your design */
 }
+
+
+@media (max-width: 991.98px) { /* Adjusting for medium screens where sidebar might collapse or change */
+    #msg_input {
+        left: 25%; /* Adjust this if your sidebar's medium screen width is different */
+        width: calc(75% - 2px); /* Adjust width to fit within the main content on medium screens */
+    }
+}
+

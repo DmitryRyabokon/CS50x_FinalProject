@@ -163,18 +163,6 @@ def change_password():
         return render_template("change_password.html")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 @socketio.on('message')
 def handle_message(data):
     print('received message: ' + data)
