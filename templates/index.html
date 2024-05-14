@@ -9,19 +9,16 @@
                 <nav class="col-md-3 col-lg-2 bg-light sidebar">
                     <div class="position-sticky pt-3">
                         <!-- Search Form -->
-                        <form id="search-form">
-                            <input id="search" type="text" class="form-control" placeholder="Search users..." name="search">
-                            <button id="search" class="btn btn-primary" type="submit">Search</button>
+                        <form id="search-form" action="/search" method="post">
+                            <input id="search-input" type="text" class="form-control" placeholder="Search users..." name="search">
+                            <button id="search-button" class="btn btn-primary" type="submit">Search</button>
                         </form>
-                        <div id="search-results"></div>
-
-                        <!-- Navigation Links -->
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#" aria-current="page">Dashboard</a>
-                            </li>
-                            <!-- Additional navigation items can be added here -->
-                        </ul>
+                        
+                        <div id="search-results">
+                            {% for user in names %}
+                                <h4>{{ user.username }}</h4>
+                            {% endfor %}
+                        </div>
                     </div>
                 </nav>
     
@@ -30,20 +27,18 @@
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                         <h1 class="h2">Welcome {{ name }}</h1>
                     </div>
-                    <!-- Your other content goes here -->
-                
-                    <!-- Place the message input div at the end of the main content but inside the main tag -->
-                    <div id="msg_input" class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary"s type="button" id="button-addon2">
+                    <!-- Chat messages display area -->
+                    
+                    <!-- Message input form -->
+                    <form name="send_message" action="/send" method="post" id="msg_input" class="input-group mb-3">
+                        <input type="text" id="message" name="message" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="sendBtn">
                             <i class="bi bi-send-fill"></i>
                         </button>
-                        
-                    </div>
+                    </form>
                 </main>
             </div>
         </div>
-
     {% else %}
         <!-- Not Logged In Message -->
         <div class="container">
@@ -53,5 +48,4 @@
             </div>
         </div>
     {% endif %}
-
 {% endblock %}

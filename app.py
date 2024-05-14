@@ -1,21 +1,20 @@
 from cs50 import SQL
 
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, send
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required
-
-app = Flask(__name__)
+import datetime
 
 # Configure application
 app = Flask(__name__)
-
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SECRET_KEY'] = 'secret!'
 Session(app)
 
 # Configure CS50 Library to use SQLite database
@@ -163,11 +162,26 @@ def change_password():
         return render_template("change_password.html")
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+    if request.method == "POST":
+        search = request.form.get("search")
+        names = db.execute("SELECT username FROM users WHERE username = ?", search )
+        return render_template("index.html", name=username, names=names)
+
+@app.route("/send", methods=["POST"])
+def send_message():
+    message = request.form.get("message")
+    return message
+
 @socketio.on('message')
-def handle_message(data):
-    print('received message: ' + data)
-    emit('reply', {'data': 'Message received!'})
+def handle_message(message):
+    print("Received message: " + message)
+    if message != "User connected!":
+        send(message, broadcast=True)
 
 
 
-
+if __name__ == '__main__':
+    socketio.run(app, host="localhost")

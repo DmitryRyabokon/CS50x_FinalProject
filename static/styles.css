@@ -35,8 +35,13 @@ main {
     box-sizing: border-box;  /* Includes padding and border in the element's total width and height */
 }
 
-#search {
+#search-input {
     margin-bottom: 20px;     /* Adds spacing between form inputs */
+}
+
+#search-results{
+    text-align: center;
+    margin: 20px;
 }
 
 .btn-primary {
@@ -50,14 +55,13 @@ main {
 #msg_input {
     position: fixed; /* Changed from absolute to fixed */
     bottom: 5%; /* Distance from the bottom of the viewport */
-    left: calc(16.6667% + 1px); /* Adjust according to your sidebar width on large screens */
+    left: 30%; /* Adjust according to your sidebar width on large screens */
     right: 0; /* Align to the right edge of the viewport */
-    padding: 0 15px; /* Optional padding */
     z-index: 5; /* Keep it above other content */
-    width: calc(83.3333% - 2px); /* Adjust width to fit within the main content */
+    width: 50%; /* Adjust width to fit within the main content */
 }
 
-#button-addon2 i {
+#sendBtn {
     /* Adjust the size of the icon if needed */
     font-size: 18px;  /* Or whatever size fits your design */
 }
@@ -69,4 +73,5 @@ main {
         width: calc(75% - 2px); /* Adjust width to fit within the main content on medium screens */
     }
 }
+
 
