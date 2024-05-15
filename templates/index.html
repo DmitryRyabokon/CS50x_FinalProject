@@ -1,51 +1,49 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    {% if name %}
-        <!-- Page Layout -->
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Sidebar for User Functions -->
-                <nav class="col-md-3 col-lg-2 bg-light sidebar">
-                    <div class="position-sticky pt-3">
-                        <!-- Search Form -->
-                        <form id="search-form" action="/search" method="post">
-                            <input id="search-input" type="text" class="form-control" placeholder="Search users..." name="search">
-                            <button id="search-button" class="btn btn-primary" type="submit">Search</button>
-                        </form>
-                        
-                        <div id="search-results">
-                            {% for user in names %}
-                                <h4>{{ user.username }}</h4>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </nav>
-    
-                <!-- Main Content Area -->
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">Welcome {{ name }}</h1>
-                    </div>
-                    <!-- Chat messages display area -->
-                    
-                    <!-- Message input form -->
-                    <form name="send_message" action="/send" method="post" id="msg_input" class="input-group mb-3">
-                        <input type="text" id="message" name="message" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="submit" id="sendBtn">
-                            <i class="bi bi-send-fill"></i>
-                        </button>
-                    </form>
-                </main>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <main class="col-sm-9 ms-sm-auto" id="chat">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h4>Welcome {{ name }}</h4>
         </div>
-    {% else %}
-        <!-- Not Logged In Message -->
-        <div class="container">
-            <div class="py-5 text-center">
-                <h2>You are not logged in.</h2>
-                <p>Please log in to access the dashboard.</p>
-            </div>
-        </div>
-    {% endif %}
+        <!-- Chat messages display area -->
+        <ul id="messages"></ul>
+        <!-- Message input form -->
+        <form name="send_message" id="msg_input" class="input-group mb-3">
+            <input type="text" id="message" name="message" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2" autocomplete="off">
+            <button class="btn btn-outline-secondary" type="submit" id="send_button">
+                <i class="bi bi-arrow-up-circle"></i>
+            </button>
+        </form>
+    </main>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var socket = io.connect('http://127.0.0.1:5000');
+            
+            socket.on('connect', function() {
+                socket.send('{{ name }} has connected!');
+            });
+
+            socket.on('message', function(msg) {
+                $("#messages").append('<li>' + msg + '</li>');
+                console.log('Received message');
+            });
+
+            $('#msg_input').on('submit', function(event) {
+                event.preventDefault();
+                var message = $('#message').val();
+                socket.send(message);
+                $('#message').val('');
+            });
+        });
+    </script>
+</body>
 {% endblock %}

@@ -1,17 +1,3 @@
-body, html {
-    height: 100%;
-    margin: 0;
-}
-main {
-    position: relative; /* New addition: Makes child absolute positioning relative to this */
-    min-height: calc(100vh - 120px); /* Ensure minimum height */
-}
-.sidebar {
-    height: 100vh;
-    overflow-y: auto;
-    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
-}
 .footer {
     position: fixed;
     bottom: 0;
@@ -35,27 +21,15 @@ main {
     box-sizing: border-box;  /* Includes padding and border in the element's total width and height */
 }
 
-#search-input {
-    margin-bottom: 20px;     /* Adds spacing between form inputs */
+#chat {
+    left: 25%;
+    position: fixed; 
+    width: 50%; 
 }
-
-#search-results{
-    text-align: center;
-    margin: 20px;
-}
-
-.btn-primary {
-    width: 100%;             /* Makes the button span the full width of the form */
-}
-
-.btn-outline-primary {
-    width: 100%;
-}
-
 #msg_input {
     position: fixed; /* Changed from absolute to fixed */
     bottom: 5%; /* Distance from the bottom of the viewport */
-    left: 30%; /* Adjust according to your sidebar width on large screens */
+    left: 25%; /* Adjust according to your sidebar width on large screens */
     right: 0; /* Align to the right edge of the viewport */
     z-index: 5; /* Keep it above other content */
     width: 50%; /* Adjust width to fit within the main content */
@@ -65,13 +39,3 @@ main {
     /* Adjust the size of the icon if needed */
     font-size: 18px;  /* Or whatever size fits your design */
 }
-
-
-@media (max-width: 991.98px) { /* Adjusting for medium screens where sidebar might collapse or change */
-    #msg_input {
-        left: 25%; /* Adjust this if your sidebar's medium screen width is different */
-        width: calc(75% - 2px); /* Adjust width to fit within the main content on medium screens */
-    }
-}
-
-
