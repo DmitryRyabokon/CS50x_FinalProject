@@ -2,9 +2,9 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #f1f1f1;
+    background-color: #f8f9fa;
     text-align: center;
-    padding: 10px 0;
+    padding: 5px;
 }
 
 #login {
@@ -34,16 +34,16 @@
 
 #msg_input {
     position: fixed; /* Changed from absolute to fixed */
-    bottom: 5%; /* Distance from the bottom of the viewport */
+    bottom: 30px; /* Distance from the bottom of the viewport */
     left: 25%; /* Adjust according to your sidebar width on large screens */
     right: 0; /* Align to the right edge of the viewport */
     z-index: 5; /* Keep it above other content */
     width: 50%; /* Adjust width to fit within the main content */
 }
 
-#sendBtn {
+#send_button {
     /* Adjust the size of the icon if needed */
-    font-size: 18px;  /* Or whatever size fits your design */
+    font-size: 20px;  /* Or whatever size fits your design */
 }
 
 .btn-primary {
