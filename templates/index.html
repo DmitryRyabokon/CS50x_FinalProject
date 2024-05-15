@@ -14,7 +14,7 @@
             <h4>Welcome {{ name }}</h4>
         </div>
         <!-- Chat messages display area -->
-        <ul id="messages"></ul>
+        <ul id="messages" class="list-unstyled"></ul>
         <!-- Message input form -->
         <form name="send_message" id="msg_input" class="input-group mb-3">
             <input type="text" id="message" name="message" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2" autocomplete="off">
@@ -29,18 +29,24 @@
             var socket = io.connect('http://127.0.0.1:5000');
             
             socket.on('connect', function() {
-                socket.send('{{ name }} has connected!');
+                socket.send({username: '{{ name }}', message: 'has connected!'});
             });
 
-            socket.on('message', function(msg) {
-                $("#messages").append('<li>' + msg + '</li>');
-                console.log('Received message');
+            socket.on('message', function(data) {
+                $("#messages").append('<li><strong>' + data.username + ':</strong> ' + data.message, '</li>');
+                console.log('Received message: ' + data.message);
+                // Scroll to the bottom of the messages container
+                $('#messages').scrollTop($('#messages')[0].scrollHeight);
             });
 
             $('#msg_input').on('submit', function(event) {
                 event.preventDefault();
                 var message = $('#message').val();
-                socket.send(message);
+                var data = {
+                    username: '{{ name }}',
+                    message: message
+                };
+                socket.send(data);
                 $('#message').val('');
             });
         });

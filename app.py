@@ -14,11 +14,12 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
-app.config['SECRET_KEY'] = 'secret!'
+app.config["SECRET_KEY"] = "secret!"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///messenger.db")
+
 
 @app.after_request
 def after_request(response):
@@ -29,14 +30,17 @@ def after_request(response):
     return response
 
 
-@app.route('/')
+@app.route("/")
 @login_required
 def index():
-    try:   
-        username = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])[0]["username"]
+    try:
+        username = db.execute(
+            "SELECT username FROM users WHERE id = ?", session["user_id"]
+        )[0]["username"]
         return render_template("index.html", name=username)
     except IndexError:
         return render_template("login.html")
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -86,7 +90,6 @@ def logout():
 
     # Redirect user to login form
     return redirect("/")
-
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -162,17 +165,21 @@ def change_password():
         return render_template("change_password.html")
 
 
-@app.route("/index", methods=["POST"])
-def send_message():
-    message = request.form.get("message")
-    return message
+@socketio.on("message")
+def handle_message(data):
+    username = db.execute(
+        "SELECT username FROM users WHERE id = ?", session["user_id"]
+    )[0]["username"]
+    if data["message"] != "has connected!":
+        db.execute(
+            "INSERT INTO messages (sender_username, message, timestamp) VALUES (?, ?, ?)",
+            username,
+            data["message"],
+            datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        )
+    send(data, broadcast=True)
 
-@socketio.on('message')
-def handle_message(msg):
-    print("Received message: " + msg)
-    send(msg, broadcast=True)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     socketio.run(app)

@@ -26,6 +26,12 @@
     position: fixed; 
     width: 50%; 
 }
+
+#messages {
+    max-height: 580px;
+    overflow-y: auto;
+}
+
 #msg_input {
     position: fixed; /* Changed from absolute to fixed */
     bottom: 5%; /* Distance from the bottom of the viewport */
