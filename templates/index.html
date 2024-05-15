@@ -15,9 +15,9 @@
         </div>
         <!-- History area -->
         <ul id="messages" class="list-unstyled">
-            {% for message in history %}
-            <li><strong>{{ message.sender_username }}</strong>: {{ message.message }} </li>
-        {% endfor %}
+            <!-- {% for message in history %}
+                <li><strong>{{ message.sender_username }}</strong>: {{ message.message }} </li>
+            {% endfor %} -->
         </ul>
         <!-- Chat messages display area -->
         <ul id="messages" class="list-unstyled"></ul>
@@ -36,7 +36,7 @@
             var socket = io.connect('http://127.0.0.1:5000');
             
             socket.on('connect', function() {
-                socket.send({username: '{{ name }}', message: 'has connected!'});
+                socket.send({username: '{{ name }}', message: 'has connected to the chat room!'});
             });
 
             socket.on('message', function(data) {
