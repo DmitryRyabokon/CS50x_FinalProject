@@ -13,9 +13,16 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h4>Welcome {{ name }}</h4>
         </div>
+        <!-- History area -->
+        <ul id="messages" class="list-unstyled">
+            {% for message in history %}
+            <li><strong>{{ message.sender_username }}</strong>: {{ message.message }} </li>
+        {% endfor %}
+        </ul>
         <!-- Chat messages display area -->
         <ul id="messages" class="list-unstyled"></ul>
         <!-- Message input form -->
+
         <form name="send_message" id="msg_input" class="input-group mb-3">
             <input type="text" id="message" name="message" class="form-control" placeholder="Write a message..." aria-label="message" aria-describedby="button-addon2" autocomplete="off">
             <button class="btn btn-outline-secondary" type="submit" id="send_button">
@@ -33,7 +40,7 @@
             });
 
             socket.on('message', function(data) {
-                $("#messages").append('<li><strong>' + data.username + ':</strong> ' + data.message, '</li>');
+                $("#messages").append('<li><strong>' + data.username + ': </strong>' + data.message, '</li>');
                 console.log('Received message: ' + data.message);
                 // Scroll to the bottom of the messages container
                 $('#messages').scrollTop($('#messages')[0].scrollHeight);

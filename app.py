@@ -33,11 +33,12 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
+    history = db.execute("SELECT * FROM messages")
     try:
         username = db.execute(
             "SELECT username FROM users WHERE id = ?", session["user_id"]
         )[0]["username"]
-        return render_template("index.html", name=username)
+        return render_template("index.html", name=username, history=history)
     except IndexError:
         return render_template("login.html")
 
@@ -133,6 +134,11 @@ def register():
         return render_template("register.html")
 
 
+@app.route("/settings", methods=["GET"])
+def settings():
+    return render_template("settings.html")
+
+
 @app.route("/change_password", methods=["GET", "POST"])
 def change_password():
     if request.method == "POST":
@@ -180,6 +186,9 @@ def handle_message(data):
     send(data, broadcast=True)
 
 
+def history():
+    history = ["message1", "message2", "message3"]
+    return render_template("index.html", history=history)
 
 if __name__ == "__main__":
     socketio.run(app)

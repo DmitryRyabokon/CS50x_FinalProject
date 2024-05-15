@@ -28,7 +28,7 @@
 }
 
 #messages {
-    max-height: 580px;
+    max-height: 575px;
     overflow-y: auto;
 }
 
@@ -44,4 +44,8 @@
 #sendBtn {
     /* Adjust the size of the icon if needed */
     font-size: 18px;  /* Or whatever size fits your design */
+}
+
+.btn-primary {
+    width: 100%
 }
