@@ -7,19 +7,15 @@
 {% block main %}
     <form id="login" action="/register" method="post">
         <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text" required>
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password" required>
         </div>
         <div class="mb-3">
-            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm password" type="password">
+            <input class="form-control mx-auto w-auto" name="confirmation" placeholder="Confirm password" type="password" required>
         </div>
-        <div class="mb-3">
-            <label for="formFileSm" class="form-label">Profile picture</label>
-            <input class="form-control form-control-sm" id="formFileSm" type="file">
-          </div>
-        <button class="btn btn-secondary" type="submit">Register</button>
+        <button class="btn btn-primary" type="submit">Register</button>
 
     </form>
 {% endblock %}

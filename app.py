@@ -33,12 +33,11 @@ def after_request(response):
 @app.route("/")
 @login_required
 def index():
-    history = db.execute("SELECT * FROM messages")
     try:
         username = db.execute(
             "SELECT username FROM users WHERE id = ?", session["user_id"]
         )[0]["username"]
-        return render_template("index.html", name=username, history=history)
+        return render_template("index.html", name=username)
     except IndexError:
         return render_template("login.html")
 
@@ -54,11 +53,11 @@ def login():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return "No user name"
+            return render_template("apology.html", error="Invalid Username")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return "Incorrect password"
+            return render_template("apology.html")
 
         # Query database for username
         rows = db.execute(
@@ -69,7 +68,7 @@ def login():
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
-            return "invalid username and/or password"
+            return render_template("apology.html", error="Invalid username/password")
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -106,7 +105,7 @@ def register():
             "SELECT * FROM users WHERE username = ?", request.form.get("username")
         )
         if len(rows) > 0:
-            return "username is already taken"
+            return render_template("apology.html", error="Username is already taken")
 
         # Ensure password was submitted
         elif not request.form.get("password"):
@@ -134,16 +133,11 @@ def register():
         return render_template("register.html")
 
 
-@app.route("/settings", methods=["GET"])
-def settings():
-    return render_template("settings.html")
-
-
 @app.route("/change_password", methods=["GET", "POST"])
 def change_password():
     if request.method == "POST":
         if not request.form.get("old_password"):
-            return "must provide old password"
+            return render_template("apology.html", error="Old password required")
 
         old_password = db.execute(
             "SELECT hash FROM users WHERE id = ?", session["user_id"]
@@ -152,13 +146,13 @@ def change_password():
         if not check_password_hash(
             old_password[0]["hash"], request.form.get("old_password")
         ):
-            return "old password doesn't match"
+            return render_template("apology.html", error="Invalid old password")
 
         elif not request.form.get("new_password"):
-            return "must provide new password"
+            return render_template("apology.html", error="New password required")
 
         elif request.form.get("new_password") != request.form.get("confirmation"):
-            return "new password doesn't match"
+            return render_template("apology.html", error="New passwords do not match. Please try again.")
 
         new_password = generate_password_hash(request.form.get("new_password"))
         db.execute(
@@ -185,10 +179,6 @@ def handle_message(data):
         )
     send(data, broadcast=True)
 
-
-def history():
-    history = ["message1", "message2", "message3"]
-    return render_template("index.html", history=history)
 
 if __name__ == "__main__":
     socketio.run(app)

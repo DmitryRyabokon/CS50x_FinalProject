@@ -28,7 +28,7 @@
 }
 
 #messages {
-    max-height: 575px;
+    max-height: 570px;
     overflow-y: auto;
 }
 
@@ -50,7 +50,7 @@
     width: 100%
 }
 
-.btn-secondary {
+.btn-primary {
     width: 100%
 }
 
