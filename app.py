@@ -98,7 +98,7 @@ def register():
     if request.method == "POST":
         # Ensure username was submitted
         if not request.form.get("username"):
-            return "must provide username"
+            return render_template("apology.html", error="Username required")
 
         # If username is already taken
         rows = db.execute(
@@ -109,11 +109,11 @@ def register():
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return "must provide password"
+            return render_template("apology.html", error="Password required")
 
         # Ensure passwords match
         elif request.form.get("confirmation") != request.form.get("password"):
-            return "password do not match"
+            return render_template("apology.html", error="Passwords do not match. Please try again")
 
         username = request.form.get("username")
         password = generate_password_hash(request.form.get("password"))
